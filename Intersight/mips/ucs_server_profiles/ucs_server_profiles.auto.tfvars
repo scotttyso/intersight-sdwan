@@ -5,7 +5,7 @@
 
 ucs_server_profiles = {
   "pa-server1" = {
-    action                        = "Deploy"
+    action                        = "No-op"
     description                   = "pa-server1 UCS Server Profile"
     organization                  = "mips"
     serial_number                 = "WZP23230WAE"
