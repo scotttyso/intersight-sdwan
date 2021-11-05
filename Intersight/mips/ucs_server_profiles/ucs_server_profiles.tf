@@ -146,16 +146,18 @@ module "ucs_server_profiles" {
   depends_on = [
     local.org_moids,
   ]
-  source              = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
-  for_each            = local.ucs_server_profiles
-  action              = each.value.action
-  description         = each.value.description != "" ? each.value.description : "${each.key} Server Profile."
-  name                = each.key
-  org_moid            = local.org_moids[each.value.organization].moid
-  static_uuid_address = each.value.static_uuid_address
-  tags                = length(each.value.tags) > 0 ? each.value.tags : local.tags
-  target_platform     = each.value.target_platform == "Standalone" ? "Standalone" : "FIAttached"
-  uuid_pool           = each.value.uuid_pool != "" ? [
+  source                 = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
+  # source                 = "../../../../../terraform-cisco-modules/terraform-intersight-imm/modules/ucs_server_profiles"
+  for_each               = local.ucs_server_profiles
+  action                 = each.value.action
+  description            = each.value.description != "" ? each.value.description : "${each.key} Server Profile."
+  name                   = each.key
+  org_moid               = local.org_moids[each.value.organization].moid
+  server_assignment_mode = each.value.server_assignment_mode
+  static_uuid_address    = each.value.static_uuid_address
+  tags                   = length(each.value.tags) > 0 ? each.value.tags : local.tags
+  target_platform        = each.value.target_platform == "Standalone" ? "Standalone" : "FIAttached"
+  uuid_pool              = each.value.uuid_pool != "" ? [
     {
       moid = local.uuid_pools[each.value.uuid_pool]
     }
