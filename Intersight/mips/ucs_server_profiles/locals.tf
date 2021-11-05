@@ -111,7 +111,6 @@ locals {
         adapter_configuration_policy = length(
           regexall("^[a-zA-Z0-9]", coalesce(v.adapter_configuration_policy, "_EMPTY"))
         ) > 0 ? v.adapter_configuration_policy : v.ucs_server_profile_template != "" ? value.adapter_configuration_policy : ""
-        assign_server = v.assign_server
         bios_policy = length(
           regexall("^[a-zA-Z0-9]", coalesce(v.bios_policy, "_EMPTY"))
         ) > 0 ? v.bios_policy : v.ucs_server_profile_template != "" ? value.bios_policy : ""
@@ -166,6 +165,7 @@ locals {
         serial_over_lan_policy = length(
           regexall("^[a-zA-Z0-9]", coalesce(v.serial_over_lan_policy, "_EMPTY"))
         ) > 0 ? v.serial_over_lan_policy : v.ucs_server_profile_template != "" ? value.serial_over_lan_policy : ""
+        server_assignment_mode = v.server_assignment_mode
         smtp_policy = length(
           regexall("^[a-zA-Z0-9]", coalesce(v.smtp_policy, "_EMPTY"))
         ) > 0 ? v.smtp_policy : v.ucs_server_profile_template != "" ? value.smtp_policy : ""
