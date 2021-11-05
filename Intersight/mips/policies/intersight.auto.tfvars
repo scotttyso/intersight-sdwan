@@ -5,8 +5,8 @@
 
 tfc_organization        = "Cisco-Richfield-Lab"
 ws_pools                = "mips_pools"
-ws_ucs_chassis_profiles = ""
-ws_ucs_domain_profiles  = ""
+ws_ucs_chassis_profiles = "mips_ucs_chassis_profiles"
+ws_ucs_domain_profiles  = "mips_ucs_domain_profiles"
 ws_ucs_server_profiles  = "mips_ucs_server_profiles"
 
 /*
