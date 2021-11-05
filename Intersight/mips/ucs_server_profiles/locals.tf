@@ -55,7 +55,9 @@ locals {
       storage_policy                = v.storage_policy != null ? v.storage_policy : null
       syslog_policy                 = v.syslog_policy != null ? v.syslog_policy : null
       tags                          = v.tags != null ? v.tags : []
-      target_platform               = v.target_platform != null ? v.target_platform : null
+      target_platform               = v.target_platform != null && (
+        v.ucs_server_profile_template == null || v.ucs_server_profile_template == ""
+      ) ? v.target_platform : v.ucs_server_profile_template == null || v.ucs_server_profile_template == "" ? "FIAttached" : null
       ucs_server_profile_template   = v.ucs_server_profile_template != null ? v.ucs_server_profile_template : ""
       uuid_pool                     = v.uuid_pool != null ? v.uuid_pool : ""
       virtual_kvm_policy            = v.virtual_kvm_policy != null ? v.virtual_kvm_policy : null

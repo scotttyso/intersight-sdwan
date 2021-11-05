@@ -136,13 +136,6 @@ variable "ucs_server_profiles" {
   ))
 }
 
-variable "static_uuid_address" {
-  default     = ""
-  description = "The UUID address for the server must include UUID prefix xxxxxxxx-xxxx-xxxx along with the UUID suffix of format xxxx-xxxxxxxxxxxx."
-  type        = string
-}
-
-
 #_________________________________________________________________________
 #
 # Intersight UCS Server Profile Module
@@ -153,7 +146,8 @@ module "ucs_server_profiles" {
   depends_on = [
     local.org_moids,
   ]
-  source              = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
+  # source              = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
+  source              = "../../../../../terraform-cisco-modules/terraform-intersight-imm/modules/ucs_server_profiles"
   for_each            = local.ucs_server_profiles
   action              = each.value.action
   description         = each.value.description != "" ? each.value.description : "${each.key} Server Profile."
