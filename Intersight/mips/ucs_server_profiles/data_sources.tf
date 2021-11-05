@@ -10,15 +10,15 @@
 #   }
 # }
 
-data "terraform_remote_state" "pools" {
-  backend = "remote"
-  config = {
-    organization = var.tfc_organization
-    workspaces = {
-      name = var.ws_pools
-    }
-  }
-}
+# data "terraform_remote_state" "pools" {
+#   backend = "remote"
+#   config = {
+#     organization = var.tfc_organization
+#     workspaces = {
+#       name = var.ws_pools
+#     }
+#   }
+# }
 
 
 #____________________________________________________________

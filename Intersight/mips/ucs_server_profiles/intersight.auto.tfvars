@@ -3,6 +3,9 @@
 # Terraform Cloud Variables
 #__________________________________________________________
 
+tfc_organization        = "Cisco-Richfield-Lab"
+ws_pools                = "mips_pools"
+
 /*
   We highly recommend that for the terraform_cloud_token you use an environment variable for input:
   - export TF_VAR_terraform_cloud_token="abcdefghijklmnopqrstuvwxyz.0123456789"
@@ -42,4 +45,17 @@ organizations = ["mips"]
 # Intersight Policy Variables
 #__________________________________________________________
 
-tags = [{ key = "Module", value = "terraform-intersight-easy-imm" }, { key = "Version", value = "0.8.5" }]
+tags = [
+  {
+    key = "mips",
+    value = "Organization"
+  },
+  {
+    key = "Module",
+    value = "terraform-intersight-easy-imm"
+  },
+  {
+    key = "Version",
+    value = "0.8.5"
+  }
+]
