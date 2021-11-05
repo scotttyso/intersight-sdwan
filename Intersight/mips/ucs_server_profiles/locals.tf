@@ -12,7 +12,8 @@ locals {
     }
   }
 
-  # Terraform Cloud Remote Resources - IP Pools
+  # Terraform Cloud Remote Resources - Pools
+  resource_pools = lookup(data.terraform_remote_state.pools.outputs, "resource_pools", {})
   uuid_pools = lookup(data.terraform_remote_state.pools.outputs, "uuid_pools", {})
 
   # Tags for Deployment

@@ -42,4 +42,17 @@ organizations = ["mips"]
 # Intersight Policy Variables
 #__________________________________________________________
 
-tags = [{ key = "Module", value = "terraform-intersight-easy-imm" }, { key = "Version", value = "0.8.5" }]
+tags = [
+  {
+    key = "mips",
+    value = "Organization"
+  },
+  {
+    key = "Module",
+    value = "terraform-intersight-easy-imm"
+  },
+  {
+    key = "Version",
+    value = "0.8.5"
+  }
+]

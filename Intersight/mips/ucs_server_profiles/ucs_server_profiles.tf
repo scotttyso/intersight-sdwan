@@ -172,7 +172,7 @@ module "ucs_server_profiles" {
   ] : []
   associated_server_pool = each.value.server_assignment_mode == "Pool" ? [
     {
-      moid = data.uuid_pools[each.value.resource_pool].moid
+      moid = local.resource_pools[each.value.resource_pool].moid
     }
   ] : []
 }
