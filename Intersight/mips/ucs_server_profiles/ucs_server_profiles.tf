@@ -146,8 +146,7 @@ module "ucs_server_profiles" {
   depends_on = [
     local.org_moids,
   ]
-  # source              = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
-  source              = "../../../../../terraform-cisco-modules/terraform-intersight-imm/modules/ucs_server_profiles"
+  source              = "terraform-cisco-modules/imm/intersight//modules/ucs_server_profiles"
   for_each            = local.ucs_server_profiles
   action              = each.value.action
   description         = each.value.description != "" ? each.value.description : "${each.key} Server Profile."
