@@ -5,9 +5,9 @@
 
 tfc_organization        = "Cisco-Richfield-Lab"
 ws_pools                = "mips_pools"
-ws_ucs_chassis_profiles = "mips_ucs_chassis_profiles"
+ws_ucs_chassis_profiles = ""
 ws_ucs_domain_profiles  = ""
-ws_ucs_server_profiles  = ""
+ws_ucs_server_profiles  = "mips_ucs_server_profiles"
 
 /*
   We highly recommend that for the terraform_cloud_token you use an environment variable for input:
