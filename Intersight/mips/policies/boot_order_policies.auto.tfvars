@@ -7,7 +7,7 @@ boot_order_policies = {
   "mips_boot_order" = {
     boot_mode          = "Uefi"
     description        = "mips_boot_order Boot Order Policy"
-    enable_secure_boot = true
+    enable_secure_boot = false
     organization       = "mips"
     tags         = []
     boot_devices = {
@@ -21,13 +21,13 @@ boot_order_policies = {
         object_type = "boot.VirtualMedia"
         Subtype     = "kvm-mapped-dvd"
       },
-      "BOOT" = {
-        bootloader_description = "Uefi Bootloader",
+      "MRAID" = {
+        bootloader_description = "Uefi_Bootloader",
         bootloader_name        = "BOOTX64.EFI",
         bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
         object_type            = "boot.LocalDisk"
-        Slot                   = "RAID"
+        Slot                   = "MRAID"
       },
     }
   }
