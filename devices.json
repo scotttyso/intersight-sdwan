@@ -1,6 +1,7 @@
 [
     {
         "device_type": "imc",
-        "hostname": "10.113.0.102"
+        "hostname": "10.113.0.103",
+        "organization": "mips"
     }
 ]

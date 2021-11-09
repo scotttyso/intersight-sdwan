@@ -1,16 +1,53 @@
 #!/usr/bin/env python3
 """Intersight Device Connector API configuration and device claim via the Intersight API."""
-from intersight.intersight_api_client import IntersightApiClient
-from intersight.apis import asset_device_claim_api
+import intersight
+from intersight.api import asset_api
+from intersight.model.asset_target import AssetTarget
+from intersight.api import organization_api
 from time import sleep
 import argparse
 import device_connector
 import json
 import os.path
+import re
 import sys
 import stdiomask
 import validators
 
+def get_api_client(api_key_id, api_secret_file, endpoint="https://intersight.com"):
+    with open(api_secret_file, 'r') as f:
+        api_key = f.read()
+
+    if re.search('BEGIN RSA PRIVATE KEY', api_key):
+        # API Key v2 format
+        signing_algorithm = intersight.signing.ALGORITHM_RSASSA_PKCS1v15
+        signing_scheme = intersight.signing.SCHEME_RSA_SHA256
+        hash_algorithm = intersight.signing.HASH_SHA256
+
+    elif re.search('BEGIN EC PRIVATE KEY', api_key):
+        # API Key v3 format
+        signing_algorithm = intersight.signing.ALGORITHM_ECDSA_MODE_DETERMINISTIC_RFC6979
+        signing_scheme = intersight.signing.SCHEME_HS2019
+        hash_algorithm = intersight.signing.HASH_SHA256
+
+    configuration = intersight.Configuration(
+        host=endpoint,
+        signing_info=intersight.signing.HttpSigningConfiguration(
+            key_id=api_key_id,
+            private_key_path=api_secret_file,
+            signing_scheme=signing_scheme,
+            signing_algorithm=signing_algorithm,
+            hash_algorithm=hash_algorithm,
+            signed_headers=[
+                intersight.signing.HEADER_REQUEST_TARGET,
+                intersight.signing.HEADER_HOST,
+                intersight.signing.HEADER_DATE,
+                intersight.signing.HEADER_DIGEST,
+            ]
+        )
+    )
+
+    return intersight.ApiClient(configuration)
 
 if __name__ == "__main__":
     return_code = 0
@@ -191,19 +228,51 @@ if __name__ == "__main__":
 
                 # Create Intersight API instance and post ID/claim code
                 # ----------------------
-                api_instance = IntersightApiClient(
-                    host=intersight_api_params['api_base_uri'],
-                    private_key=intersight_api_params['api_private_key_file'],
-                    api_key_id=intersight_api_params['api_key_id'],
-                )
+                api_key = intersight_api_params['api_key_id']
+                api_key_file = intersight_api_params['api_private_key_file']
+
+                api_client = get_api_client(api_key, api_key_file)
+                # api_instance = intersight.get_api_client(
+                #     host=intersight_api_params['api_base_uri'],
+                #     private_key=intersight_api_params['api_private_key_file'],
+                #     api_key_id=intersight_api_params['api_key_id'],
+                # )
+
+                api_instance = asset_api.AssetApi(api_client)
+
+                # AssetTarget | The 'asset.Target' resource to create.
+                asset_target = AssetTarget()
+
+                # setting claim_code and device_id
+                asset_target.security_token = claim_code
+                asset_target.serial_number = device_id
+
+                try:
+                    # Create a 'asset.Target' resource.
+                    claim_resp = api_instance.create_asset_target(asset_target)
+                    print(json.dumps(claim_resp))
+                except intersight.ApiException as e:
+                    print("Exception when calling AssetApi->create_asset_device_claim: %s\n" % e)
+
+                exit()
+
+                # Query Organization API
+                api_handle_org = organization_api.OrganizationApi(api_instance)
+                org_reference_name = device['organization']
+                kwargs = dict(filter="Name eq '%s'" % org_reference_name)
+                org_reference_result = api_handle_org.organization_organizations_get(**kwargs)
+                if org_reference_result.results:
+                    org_moid = org_reference_result.results[0].moid
+                    print(f'org moid is {org_moid}')
+                    exit()
 
                 # create device claim API handle
-                api_handle = asset_device_claim_api.AssetDeviceClaimApi(api_instance)
+                # api_handle = asset_device_claim_api.AssetDeviceClaimApi(api_instance)
 
                 # post ID/Claim Code
-                claim_body = {'SecurityToken': claim_code, 'SerialNumber': device_id}
-                claim_result = api_handle.asset_device_claims_post(claim_body)
-                result['changed'] = True
+                # claim_body = {'SecurityToken': claim_code, 'SerialNumber': device_id}
+                # claim_result = api_handle.asset_device_claims_post(claim_body)
+                # result['changed'] = True
 
             print(json.dumps(result))
 
