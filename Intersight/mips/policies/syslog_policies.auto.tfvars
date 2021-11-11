@@ -16,6 +16,13 @@ syslog_policies = {
         port         = 514
         protocol     = "udp"
       },
+      {
+        enabled      = true
+        hostname     = "lnx2.rich.ciscolabs.com"
+        min_severity = "warning"
+        port         = 514
+        protocol     = "udp"
+      }
     ]
     tags         = []
   }

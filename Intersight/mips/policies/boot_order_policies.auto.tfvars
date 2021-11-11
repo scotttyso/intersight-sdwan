@@ -31,9 +31,9 @@ boot_order_policies = {
       },
     }
   }
-  "mips_ahci" = {
+  "mips_nvme" = {
     boot_mode          = "Uefi"
-    description        = "mips_ahci Boot Order Policy"
+    description        = "mips_nvme Boot Order Policy"
     enable_secure_boot = false
     organization       = "mips"
     tags         = []
@@ -43,18 +43,12 @@ boot_order_policies = {
         object_type = "boot.VirtualMedia"
         Subtype     = "cimc-mapped-dvd"
       },
-      "KVM_DVD" = {
-        enabled     = true
-        object_type = "boot.VirtualMedia"
-        Subtype     = "kvm-mapped-dvd"
-      },
-      "PCH" = {
+      "NVMe" = {
         bootloader_description = "Uefi_Bootloader",
         bootloader_name        = "BOOTX64.EFI",
         bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
-        object_type            = "boot.PchStorage"
-        Lun                    = 0
+        object_type            = "boot.Nvme"
       },
     }
   }

@@ -56,7 +56,7 @@ ucs_server_profile_templates = {
     # Compute Configuration
     #___________________________
     bios_policy              = "mips_Virtualization"
-    boot_order_policy        = "mips_ahci"
+    boot_order_policy        = "mips_nvme"
     persistent_memory_policy = ""
     virtual_media_policy     = ""
     #___________________________

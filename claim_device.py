@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """Intersight Device Connector API configuration and device claim via the Intersight API."""
-from datetime import datetime, timedelta
-from helpers import format_time, print_results_to_table
-from pprint import pformat
+# from datetime import datetime, timedelta
+# from helpers import format_time, print_results_to_table
+# from pprint import pformat
 from time import sleep
-from typing import Text, Type
+# from typing import Text, Type
 
-import argparse
-
-from intersight import api
+# import argparse
 import credentials
 import device_connector
 import json
