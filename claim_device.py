@@ -1,18 +1,33 @@
 #!/usr/bin/env python3
 """Intersight Device Connector API configuration and device claim via the Intersight API."""
-import intersight
-from intersight.api import asset_api
-from intersight.model.asset_target import AssetTarget
-from intersight.api import organization_api
+from datetime import datetime, timedelta
+from helpers import format_time, print_results_to_table
+from pprint import pformat
 from time import sleep
+from typing import Text, Type
+
 import argparse
+
+from intersight import api
+import credentials
 import device_connector
 import json
+import intersight
+import logging
+import traceback
 import os.path
 import re
 import sys
 import stdiomask
 import validators
+
+from intersight.api import asset_api
+from intersight.api import resource_api
+
+
+FORMAT = '%(asctime)-15s [%(levelname)s] [%(filename)s:%(lineno)s] %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+logger = logging.getLogger('openapi')
 
 def get_api_client(api_key_id, api_secret_file, endpoint="https://intersight.com"):
     with open(api_secret_file, 'r') as f:
@@ -51,65 +66,47 @@ def get_api_client(api_key_id, api_secret_file, endpoint="https://intersight.com
 
 if __name__ == "__main__":
     return_code = 0
+    # api_key = os.get
+    # api_client = get_api_client("api_key", "~/api_secret_file_path")
+    client,devices_list = credentials.config_credentials()
 
-    valid = False
-    while valid == False:
-        if os.environ.get('api_base_uri') is None:
-            api_base_uri = input('What is the api_base_uri?'\
-                '\nPress Enter to choose the default uri of [https://intersight.com/api/v1]: ')
-            if api_base_uri == '':
-                api_base_uri = 'https://intersight.com/api/v1'
-        else:
-            api_base_uri = os.environ.get('api_base_uri')
+    #valid = False
+    #while valid == False:
+    #    if os.environ.get('api_base_uri') is None:
+    #        api_base_uri = input('What is the api_base_uri?'\
+    #            '\nPress Enter to choose the default uri of [https://intersight.com/api/v1]: ')
+    #        if api_base_uri == '':
+    #            api_base_uri = 'https://intersight.com/api/v1'
+    #    else:
+    #        api_base_uri = os.environ.get('api_base_uri')
+    #    if validators.url(api_base_uri):
+    #        valid = True
+    #    else:
+    #        print('Invalid URL.  Please Re-Enter the api_base_uri.')
 
-        if validators.url(api_base_uri):
-            valid = True
-        else:
-            print('Invalid URL.  Please Re-Enter the api_base_uri.')
+    #valid = False
+    #while valid == False:
+    #    if os.environ.get('api_key_id') is None:
+    #        api_key_id = stdiomask.getpass(prompt='Enter the api_key_id: ')
+    #    else:
+    #        api_key_id = os.environ.get('api_key_id')
+    #    if validators.length(api_key_id, min=74, max=74):
+    #        valid = True
+    #    else:
+    #        print('Invalid API Key.  Please Re-Enter the api_key_id.')
 
-    valid = False
-    while valid == False:
-        if os.environ.get('api_key_id') is None:
-            api_key_id = stdiomask.getpass(prompt='Enter the api_key_id: ')
-        else:
-            api_key_id = os.environ.get('api_key_id')
-
-        if validators.length(api_key_id, min=74, max=74):
-            valid = True
-        else:
-            print('Invalid API Key.  Please Re-Enter the api_key_id.')
-
-    valid = False
-    while valid == False:
-        if os.environ.get('api_private_key_file') is None:
-            api_private_key_file = input('Enter the api_private_key_file location: ')
-        else:
-            api_private_key_file = os.environ.get('api_private_key_file')
-
-        if os.path.isfile(api_private_key_file):
-            valid = True
-        else:
-            print('Invalid Private Key File.  Please Re-Enter the api_private_key_file.')
-
-    intersight_api_params = {
-        "api_base_uri":api_base_uri,
-        "api_key_id":api_key_id,
-        "api_private_key_file":api_private_key_file
-    }
+    #valid = False
+    #while valid == False:
+    #    if os.environ.get('api_private_key_file') is None:
+    #        api_private_key_file = input('Enter the api_private_key_file location: ')
+    #    else:
+    #        api_private_key_file = os.environ.get('api_private_key_file')
+    #    if os.path.isfile(api_private_key_file):
+    #        valid = True
+    #    else:
+    #        print('Invalid Private Key File.  Please Re-Enter the api_private_key_file.')
 
     try:
-        parser = argparse.ArgumentParser()
-        help_str = 'JSON file with device access information (device hostname, username, password, and proxy settings if required)'
-        parser.add_argument('-d', '--devices', required=True, help=help_str)
-        args = parser.parse_args()
-        if os.path.isfile(args.devices):
-            with open(args.devices, 'r') as devices_file:
-                devices_list = json.load(devices_file)
-        else:
-            # Argument devices can be a JSON string instead of file.
-            # JSON string input can be used with Ansible to directly pass all info on the command line.
-            devices_list = json.loads(args.devices)
-
         valid = False
         while valid == False:
             if os.environ.get('username') is None:
@@ -136,7 +133,7 @@ if __name__ == "__main__":
 
         for device in devices_list:
             result = dict(changed=False)
-            result['msg'] = "  Host: %s" % device['hostname']
+            result['msg'] = "  Host : %s" % device['hostname']
             # default access mode to allow control (Read-only False) and set to a boolean value if a string
             if not device.get('read_only'):
                 device['read_only'] = False
@@ -164,7 +161,7 @@ if __name__ == "__main__":
                 return_code = 1
                 print(json.dumps(result))
                 continue
-
+            
             if not dc_obj.logged_in:
                 result['msg'] += "  Login error"
                 return_code = 1
@@ -198,21 +195,22 @@ if __name__ == "__main__":
                 continue
 
             # wait for a connection to establish before checking claim state
+
             for _ in range(10):
                 if ro_json['ConnectionState'] != 'Connected':
                     sleep(1)
                     ro_json = dc_obj.get_status()
-                else:
-                    break
 
-            result['msg'] += "  AdminState: %s" % ro_json['AdminState']
-            result['msg'] += "  ConnectionState: %s" % ro_json['ConnectionState']
-            result['msg'] += "  Claimed state: %s" % ro_json['AccountOwnershipState']
+            result['msg'] += "  AdminState : %s" % ro_json['AdminState']
+            result['msg'] += "  ConnectionState : %s" % ro_json['ConnectionState']
+            result['msg'] += "  Claimed state : %s" % ro_json['AccountOwnershipState']
 
             if ro_json['ConnectionState'] != 'Connected':
                 return_code = 1
-                print(json.dumps(result))
                 continue
+            else:
+                (claim_resp, device_id, claim_code) = dc_obj.get_claim_info(ro_json)
+                result['msg'] += "  Id : %s" % device_id
 
             if ro_json['AccountOwnershipState'] != 'Claimed':
                 # attempt to claim
@@ -220,61 +218,66 @@ if __name__ == "__main__":
                 if claim_resp.get('ApiError'):
                     result['msg'] += claim_resp['ApiError']
                     return_code = 1
-                    print(json.dumps(result))
                     continue
 
-                result['msg'] += "  Id: %s" % device_id
-                result['msg'] += "  Token: %s" % claim_code
+                result['msg'] += "  Id : %s" % device_id
+                result['msg'] += "  Token : %s" % claim_code
 
                 # Create Intersight API instance and post ID/claim code
                 # ----------------------
-                api_key = intersight_api_params['api_key_id']
-                api_key_file = intersight_api_params['api_private_key_file']
-
-                api_client = get_api_client(api_key, api_key_file)
-                # api_instance = intersight.get_api_client(
-                #     host=intersight_api_params['api_base_uri'],
-                #     private_key=intersight_api_params['api_private_key_file'],
-                #     api_key_id=intersight_api_params['api_key_id'],
-                # )
-
-                api_instance = asset_api.AssetApi(api_client)
-
-                # AssetTarget | The 'asset.Target' resource to create.
-                asset_target = AssetTarget()
+                api_handle = asset_api.AssetApi(client)
 
                 # setting claim_code and device_id
-                asset_target.security_token = claim_code
-                asset_target.serial_number = device_id
+                claim_body = {'SecurityToken': claim_code, 'SerialNumber': device_id}
+                claim_result = api_handle.create_asset_device_claim(claim_body)
+                result['changed'] = True
 
-                try:
-                    # Create a 'asset.Target' resource.
-                    claim_resp = api_instance.create_asset_target(asset_target)
-                    print(json.dumps(claim_resp))
-                except intersight.ApiException as e:
-                    print("Exception when calling AssetApi->create_asset_device_claim: %s\n" % e)
+            api_handle = asset_api.AssetApi(client)
+            query_filter = f"TargetId eq '{device_id}'"
+            kwargs = dict(filter=query_filter)
+            target_list = api_handle.get_asset_target_list(**kwargs)
+            if target_list.results:
+                target_moid = target_list.results[0].moid
+                device_registration = target_list.results[0].parent.moid
+                api_handle = resource_api.ResourceApi(client)
+                query_filter = f"Name eq '{device['resource_group']}'"
+                kwargs = dict(filter=query_filter)
+                resource_group = api_handle.get_resource_group_list(**kwargs)
+                if resource_group.results:
+                    resource_group_moid = resource_group.results[0].moid
+                    device_registrations = re.search(r'\(([0-9a-z\'\,]+)\)', resource_group.results[0].selectors[0].selector).group(1)
+                    if not device_registration in device_registrations:
+                        appended_targets = device_registrations + "," + f"'{device_registration}'"
+                        resource_group = {
+                            "Selectors":[
+                                {
+                                    "ClassId": "resource.Selector",
+                                    "ObjectType": "resource.Selector",
+                                    "Selector": "/api/v1/asset/DeviceRegistrations?$filter=Moid in("f"{appended_targets})"
+                                }
+                            ]
+                        }
+                        resource_group_patch = api_handle.patch_resource_group(resource_group_moid, resource_group)
+                        result['Resource Group'] = device['resource_group']
+                        result['Resource Updated'] = True
+                        result['changed'] = True
+                    else:
+                        result['Resource Group'] = device['resource_group']
+                        result['Resource Updated'] = False
 
-                exit()
-
-                # Query Organization API
-                api_handle_org = organization_api.OrganizationApi(api_instance)
-                org_reference_name = device['organization']
-                kwargs = dict(filter="Name eq '%s'" % org_reference_name)
-                org_reference_result = api_handle_org.organization_organizations_get(**kwargs)
-                if org_reference_result.results:
-                    org_moid = org_reference_result.results[0].moid
-                    print(f'org moid is {org_moid}')
-                    exit()
-
-                # create device claim API handle
-                # api_handle = asset_device_claim_api.AssetDeviceClaimApi(api_instance)
-
-                # post ID/Claim Code
-                # claim_body = {'SecurityToken': claim_code, 'SerialNumber': device_id}
-                # claim_result = api_handle.asset_device_claims_post(claim_body)
-                # result['changed'] = True
-
-            print(json.dumps(result))
+            print('')
+            print('-' * 60)
+            for key, value in result.items():
+                if key == 'msg':
+                    msg_split = value.split('  ')
+                    msg_split.sort()
+                    for msg in msg_split:
+                        if not msg == '':
+                            print(msg)
+                else:
+                    print(key, ':', value)
+            print('-' * 60)
+            print('')
 
             # logout of any open sessions
             dc_obj.logout()

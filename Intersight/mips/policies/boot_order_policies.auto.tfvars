@@ -31,4 +31,31 @@ boot_order_policies = {
       },
     }
   }
+  "mips_ahci" = {
+    boot_mode          = "Uefi"
+    description        = "mips_ahci Boot Order Policy"
+    enable_secure_boot = false
+    organization       = "mips"
+    tags         = []
+    boot_devices = {
+      "CIMC_DVD" = {
+        enabled     = true
+        object_type = "boot.VirtualMedia"
+        Subtype     = "cimc-mapped-dvd"
+      },
+      "KVM_DVD" = {
+        enabled     = true
+        object_type = "boot.VirtualMedia"
+        Subtype     = "kvm-mapped-dvd"
+      },
+      "PCH" = {
+        bootloader_description = "Uefi_Bootloader",
+        bootloader_name        = "BOOTX64.EFI",
+        bootloader_path        = "\\EFI\\BOOT\\",
+        enabled                = true
+        object_type            = "boot.LocalDisk"
+        Lun                    = 0
+      },
+    }
+  }
 }

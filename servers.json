@@ -1,0 +1,7 @@
+[
+    {
+        "device_type": "imc",
+        "hostname": "10.113.100.101",
+        "resource_group": "mips-rg"
+    }
+]
