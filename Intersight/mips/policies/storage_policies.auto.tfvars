@@ -56,7 +56,7 @@ storage_policies = {
         manual_drive_group = {
           "RAID1v2_DG0" = {
             drive_array_spans = {
-              "span_0" = {
+              "RAID1v2_span_0" = {
                 slots = "3,4"
               }
             }
