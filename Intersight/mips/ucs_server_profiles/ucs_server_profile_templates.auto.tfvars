@@ -79,7 +79,7 @@ ucs_server_profile_templates = {
     #
     # Storage Configuration
     #___________________________
-    sd_card_policy = "sdcard_disabled"
+    sd_card_policy = ""
     storage_policy = "RAID1v2"
     #___________________________
     #
