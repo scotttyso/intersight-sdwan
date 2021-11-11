@@ -54,7 +54,7 @@ storage_policies = {
     drive_group = {
       "RAID1v2_DG0" = {
         manual_drive_group = {
-          "dg0" = {
+          "RAID1v2_DG0" = {
             drive_array_spans = {
               "span_0" = {
                 slots = "3,4"
@@ -64,7 +64,7 @@ storage_policies = {
         }
         raid_level = "Raid1"
         virtual_drives = {
-          "VD0" = {
+          "RAID1v2_VD0" = {
             access_policy       = "Default"
             boot_drive          = true
             disk_cache          = "Default"
