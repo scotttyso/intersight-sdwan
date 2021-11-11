@@ -52,11 +52,11 @@ storage_policies = {
   "RAID1v2" = {
     description = "RAID1 Version 2 Storage Policy"
     drive_group = {
-      "DGO" = {
+      "DG0" = {
         manual_drive_group = {
-          "dg0" = {
+          "DG0" = {
             drive_array_spans = {
-              "span_0" = {
+              "SPAN_0" = {
                 slots = "3,4"
               }
             }
@@ -64,7 +64,7 @@ storage_policies = {
         }
         raid_level = "Raid1"
         virtual_drives = {
-          "VD0" = {
+          "vd0" = {
             access_policy       = "Default"
             boot_drive          = true
             disk_cache          = "Default"
