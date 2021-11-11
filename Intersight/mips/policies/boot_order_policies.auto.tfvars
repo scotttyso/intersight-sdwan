@@ -53,7 +53,7 @@ boot_order_policies = {
         bootloader_name        = "BOOTX64.EFI",
         bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
-        object_type            = "boot.LocalDisk"
+        object_type            = "boot.PchStorage"
         Lun                    = 0
       },
     }
