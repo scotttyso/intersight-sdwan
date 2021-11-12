@@ -38,10 +38,10 @@ boot_order_policies = {
     organization       = "mips"
     tags         = []
     boot_devices = {
-      "CIMC_DVD" = {
+      "KVM_DVD" = {
         enabled     = true
         object_type = "boot.VirtualMedia"
-        Subtype     = "cimc-mapped-dvd"
+        Subtype     = "kvm-mapped-dvd"
       },
       "NVMe" = {
         bootloader_description = "Uefi_Bootloader",
