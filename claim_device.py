@@ -64,45 +64,8 @@ def get_api_client(api_key_id, api_secret_file, endpoint="https://intersight.com
 
 if __name__ == "__main__":
     return_code = 0
-    # api_key = os.get
-    # api_client = get_api_client("api_key", "~/api_secret_file_path")
+
     client,devices_list = credentials.config_credentials()
-
-    #valid = False
-    #while valid == False:
-    #    if os.environ.get('api_base_uri') is None:
-    #        api_base_uri = input('What is the api_base_uri?'\
-    #            '\nPress Enter to choose the default uri of [https://intersight.com/api/v1]: ')
-    #        if api_base_uri == '':
-    #            api_base_uri = 'https://intersight.com/api/v1'
-    #    else:
-    #        api_base_uri = os.environ.get('api_base_uri')
-    #    if validators.url(api_base_uri):
-    #        valid = True
-    #    else:
-    #        print('Invalid URL.  Please Re-Enter the api_base_uri.')
-
-    #valid = False
-    #while valid == False:
-    #    if os.environ.get('api_key_id') is None:
-    #        api_key_id = stdiomask.getpass(prompt='Enter the api_key_id: ')
-    #    else:
-    #        api_key_id = os.environ.get('api_key_id')
-    #    if validators.length(api_key_id, min=74, max=74):
-    #        valid = True
-    #    else:
-    #        print('Invalid API Key.  Please Re-Enter the api_key_id.')
-
-    #valid = False
-    #while valid == False:
-    #    if os.environ.get('api_private_key_file') is None:
-    #        api_private_key_file = input('Enter the api_private_key_file location: ')
-    #    else:
-    #        api_private_key_file = os.environ.get('api_private_key_file')
-    #    if os.path.isfile(api_private_key_file):
-    #        valid = True
-    #    else:
-    #        print('Invalid Private Key File.  Please Re-Enter the api_private_key_file.')
 
     try:
         valid = False
@@ -207,6 +170,7 @@ if __name__ == "__main__":
                 return_code = 1
                 continue
             else:
+                print(ro_json['ConnectionState'])
                 (claim_resp, device_id, claim_code) = dc_obj.get_claim_info(ro_json)
                 result['msg'] += "  Id : %s" % device_id
 

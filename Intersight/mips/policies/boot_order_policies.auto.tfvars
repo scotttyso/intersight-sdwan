@@ -45,10 +45,14 @@ boot_order_policies = {
       },
       "NVMe" = {
         bootloader_description = "Uefi_Bootloader",
-        bootloader_name        = "BOOTX64.EFI",
+        bootloader_name        = "BOOTx64.EFI",
         bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
         object_type            = "boot.Nvme"
+      },
+      "UEFI" = {
+        enabled                = true
+        object_type            = "boot.UefiShell"
       },
     }
   }
