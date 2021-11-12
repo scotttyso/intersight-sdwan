@@ -40,10 +40,9 @@ boot_order_policies = {
         object_type = "boot.VirtualMedia"
         Subtype     = "kvm-mapped-dvd"
       },
-      "MRAID" = {
+      "NVMe" = {
         enabled                = true
-        object_type            = "boot.LocalDisk"
-        Slot                   = "MRAID"
+        object_type            = "boot.Nvme"
       },
       "UEFI" = {
         enabled                = true
