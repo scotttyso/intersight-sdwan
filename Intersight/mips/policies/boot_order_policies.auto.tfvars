@@ -22,6 +22,9 @@ boot_order_policies = {
         Subtype     = "kvm-mapped-dvd"
       },
       "MRAID" = {
+        bootloader_description = "Uefi_Bootloader",
+        bootloader_name        = "BOOTX64.EFI",
+        bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
         object_type            = "boot.LocalDisk"
         Slot                   = "MRAID"
@@ -41,6 +44,9 @@ boot_order_policies = {
         Subtype     = "kvm-mapped-dvd"
       },
       "NVMe" = {
+        bootloader_description = "Uefi_Bootloader",
+        bootloader_name        = "BOOTX64.EFI",
+        bootloader_path        = "\\EFI\\BOOT\\",
         enabled                = true
         object_type            = "boot.Nvme"
       },
