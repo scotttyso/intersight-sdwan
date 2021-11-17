@@ -6,10 +6,10 @@
 uuid_pools = {
   "SVB_pool" = {
     assignment_order = "sequential"
-    prefix           = ""
+    prefix           = "000025B5-0000-0000"
     uuid_blocks = [
       {
-        from = "000025B5-0000-0000"
+        from = "0000-000000000000"
         size = "1000"
       },
     ]
