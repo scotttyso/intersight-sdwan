@@ -22,4 +22,13 @@ ucs_server_profiles = {
     ucs_server_profile_template   = "mips_template_1"
     tags = []
   }
+  "mips-srv03" = {
+    action                        = "No-op"
+    description                   = "mips-srv03 UCS Server Profile"
+    organization                  = "mips"
+    serial_number                 = "WZP22020L4X"
+    server_assignment_mode        = "Static"
+    ucs_server_profile_template   = "mips_template_1"
+    tags = []
+  }
 }
