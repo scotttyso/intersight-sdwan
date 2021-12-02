@@ -12,8 +12,8 @@ ucs_server_profile_templates = {
     #
     # Compute Configuration
     #___________________________
-    bios_policy              = "mips_Virtualization"
-    boot_order_policy        = "mips_boot_order"
+    bios_policy              = "Virtualization"
+    boot_order_policy        = "Uefi_MRAID"
     persistent_memory_policy = ""
     virtual_media_policy     = ""
     #___________________________
@@ -21,17 +21,17 @@ ucs_server_profile_templates = {
     # Management Configuration
     #___________________________
     device_connector_policy     = ""
-    ipmi_over_lan_policy        = "mips_ipmi"
+    ipmi_over_lan_policy        = "IPMI"
     ldap_policy                 = ""
-    local_user_policy           = "mips_local_users"
-    network_connectivity_policy = "mips_dns"
-    ntp_policy                  = "mips_ntp"
-    serial_over_lan_policy      = "mips_sol"
-    smtp_policy                 = "mips_smtp"
-    snmp_policy                 = "mips_snmp"
-    ssh_policy                  = "mips_ssh"
-    syslog_policy               = "mips_syslog"
-    virtual_kvm_policy          = "mips_vkvm"
+    local_user_policy           = "Local_Users"
+    network_connectivity_policy = "DNS"
+    ntp_policy                  = "NTP"
+    serial_over_lan_policy      = "SoL"
+    smtp_policy                 = "SMTP"
+    snmp_policy                 = "SNMP"
+    ssh_policy                  = "SSH"
+    syslog_policy               = "Syslog"
+    virtual_kvm_policy          = "vKVM"
     #___________________________
     #
     # Storage Configuration
@@ -55,8 +55,8 @@ ucs_server_profile_templates = {
     #
     # Compute Configuration
     #___________________________
-    bios_policy              = "mips_Virtualization"
-    boot_order_policy        = "mips_nvme"
+    bios_policy              = "Virtualization"
+    boot_order_policy        = "Uefi_NVMe"
     persistent_memory_policy = ""
     virtual_media_policy     = ""
     #___________________________
@@ -64,17 +64,17 @@ ucs_server_profile_templates = {
     # Management Configuration
     #___________________________
     device_connector_policy     = ""
-    ipmi_over_lan_policy        = "mips_ipmi"
+    ipmi_over_lan_policy        = "IPMI"
     ldap_policy                 = ""
-    local_user_policy           = "mips_local_users"
-    network_connectivity_policy = "mips_dns"
-    ntp_policy                  = "mips_ntp"
-    serial_over_lan_policy      = "mips_sol"
-    smtp_policy                 = "mips_smtp"
-    snmp_policy                 = "mips_snmp"
-    ssh_policy                  = "mips_ssh"
-    syslog_policy               = "mips_syslog"
-    virtual_kvm_policy          = "mips_vkvm"
+    local_user_policy           = "Local_Users"
+    network_connectivity_policy = "DNS"
+    ntp_policy                  = "NTP"
+    serial_over_lan_policy      = "SoL"
+    smtp_policy                 = "SMTP"
+    snmp_policy                 = "SNMP"
+    ssh_policy                  = "SSH"
+    syslog_policy               = "Syslog"
+    virtual_kvm_policy          = "vKVM"
     #___________________________
     #
     # Storage Configuration
