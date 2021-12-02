@@ -4,8 +4,8 @@
 #______________________________________________
 
 syslog_policies = {
-  "mips_syslog" = {
-    description        = "mips_syslog Syslog Policy"
+  "Syslog" = {
+    description        = "MIPS Syslog Policy"
     local_min_severity = "warning"
     organization       = "mips"
     remote_clients    = [

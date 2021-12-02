@@ -4,10 +4,10 @@
 #______________________________________________
 
 ethernet_network_control_policies = {
-  "mips_netwk_ctrl" = {
+  "both_enabled" = {
     action_on_uplink_fail = "linkDown"
     cdp_enable            = true
-    description           = "mips_netwk_ctrl Ethernet Network Control Policy"
+    description           = "both_enabled Ethernet Network Control Policy"
     lldp_enable_receive   = true
     lldp_enable_transmit  = true
     mac_register_mode     = "nativeVlanOnly"

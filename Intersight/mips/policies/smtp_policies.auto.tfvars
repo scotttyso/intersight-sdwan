@@ -4,8 +4,8 @@
 #______________________________________________
 
 smtp_policies = {
-  "mips_smtp" = {
-    description               = "mips_smtp SMTP Policy"
+  "SMTP" = {
+    description               = "MIPS SMTP Policy"
     enable_smtp               = true
     mail_alert_recipients = [
         "rich-lab@cisco.com",

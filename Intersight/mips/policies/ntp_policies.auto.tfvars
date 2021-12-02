@@ -4,8 +4,8 @@
 #______________________________________________
 
 ntp_policies = {
-  "mips_ntp" = {
-    description  = "mips_ntp NTP Policy"
+  "NTP" = {
+    description  = "MIPS NTP Policy"
     enabled      = true
     organization = "mips"
     timezone     = "America/New_York"

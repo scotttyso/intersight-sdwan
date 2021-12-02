@@ -4,8 +4,8 @@
 #______________________________________________
 
 virtual_kvm_policies = {
-  "mips_vkvm" = {
-    description               = "mips_vkvm Virtual KVM Policy"
+  "vKVM" = {
+    description               = "Virtual KVM Policy"
     enable_local_server_video = true
     enable_video_encryption   = true
     enable_virtual_kvm        = true

@@ -4,8 +4,8 @@
 #______________________________________________
 
 network_connectivity_policies = {
-  "mips_dns" = {
-    description               = "mips_dns Network Connectivity Policy"
+  "DNS" = {
+    description               = "MIPS Network Connectivity Policy"
     enable_ipv6               = false
     organization              = "mips"
     update_domain             = ""

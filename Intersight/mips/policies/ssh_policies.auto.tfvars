@@ -4,8 +4,8 @@
 #______________________________________________
 
 ssh_policies = {
-  "mips_ssh" = {
-    description  = "mips_ssh SSH Policy"
+  "SSH" = {
+    description  = "MIPS SSH Policy"
     enable_ssh   = true
     organization = "mips"
     ssh_port     = 22

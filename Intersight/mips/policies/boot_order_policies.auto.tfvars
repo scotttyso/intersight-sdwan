@@ -4,9 +4,9 @@
 #______________________________________________
 
 boot_order_policies = {
-  "mips_boot_order" = {
+  "Uefi_MRAID" = {
     boot_mode          = "Uefi"
-    description        = "mips_boot_order Boot Order Policy"
+    description        = "Uefi_MRAID Boot Order Policy"
     enable_secure_boot = false
     organization       = "mips"
     tags         = []
@@ -31,9 +31,9 @@ boot_order_policies = {
       },
     }
   }
-  "mips_nvme" = {
+  "Uefi_NVMe" = {
     boot_mode          = "Uefi"
-    description        = "mips_nvme Boot Order Policy"
+    description        = "Uefi_NVMe Boot Order Policy"
     enable_secure_boot = false
     organization       = "mips"
     tags         = []

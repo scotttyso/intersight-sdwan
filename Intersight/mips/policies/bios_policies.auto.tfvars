@@ -4,7 +4,7 @@
 #______________________________________________
 
 bios_policies = {
-  "mips_Virtualization" = {
+  "Virtualization" = {
     bios_template = "Virtualization"
     description   = "mips_Virtualization BIOS Policy"
     organization  = "mips"

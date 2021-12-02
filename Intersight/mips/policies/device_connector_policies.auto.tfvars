@@ -4,9 +4,9 @@
 #______________________________________________
 
 device_connector_policies = {
-  "mips_devcon" = {
+  "MIPS" = {
     configuration_lockout = true
-    description           = "mips_devcon Device Connector Policy"
+    description           = "MIPS Device Connector Policy"
     organization          = "mips"
     tags                = []
   }
