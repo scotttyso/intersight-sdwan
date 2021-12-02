@@ -10,7 +10,7 @@ ucs_server_profiles = {
     organization                  = "mips"
     serial_number                 = "WZP22020L3V"
     server_assignment_mode        = "Static"
-    ucs_server_profile_template   = "mips_template_2"
+    ucs_server_profile_template   = "mips_template_1"
     tags = []
   }
   "mips-srv02" = {
@@ -19,7 +19,7 @@ ucs_server_profiles = {
     organization                  = "mips"
     serial_number                 = "WZP22020L71"
     server_assignment_mode        = "Static"
-    ucs_server_profile_template   = "mips_template_2"
+    ucs_server_profile_template   = "mips_template_1"
     tags = []
   }
 }
